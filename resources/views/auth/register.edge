@@ -1,0 +1,35 @@
+@layout('layout/app')
+
+@section('content')
+  @if(flashMessages.has('errors'))
+    <div class="alert alert-danger">{{ flashMessages.get('errors') }}</div>
+  @endif
+  <div class="row d-flex justify-content-center">
+    <div class="col-4">
+      <main class="form-signin">
+        <form action="{{ route('auth.store') }}" method="post">
+          <h1 class="h3 mb-3 fw-normal">Registre-se</h1>
+
+          <div class="form-floating mb-1">
+            <input type="text" class="form-control" name="name" id="name" placeholder="Nome" autofocus>
+            <label for="name">Nome</label>
+          </div>
+          <div class="form-floating mb-1">
+            <input type="email" class="form-control" name="email" id="email" placeholder="nome@exemplo.com">
+            <label for="email">Email</label>
+          </div>
+          <div class="form-floating mb-1">
+            <input type="password" class="form-control" name="password" id="password" placeholder="Senha">
+            <label for="password">Senha</label>
+          </div>
+          <div class="form-floating mb-1">
+            <input type="checkbox" class="form-control" name="admin" id="admin">
+            <label for="admin">Administrador</label>
+          </div>
+
+          <button class="w-100 btn btn-lg btn-primary" type="submit">Registrar</button>
+        </form>
+      </main>
+    </div>
+  </div>
+@endsection
