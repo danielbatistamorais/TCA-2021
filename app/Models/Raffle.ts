@@ -1,9 +1,8 @@
 import { DateTime } from 'luxon'
 
-import {
-  column,
-  BaseModel,
-} from '@ioc:Adonis/Lucid/Orm'
+import { column, BaseModel, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import Premium from './Premium'
+import Ticket from './Ticket'
 
 export default class Raffle extends BaseModel {
   @column({ isPrimary: true })
@@ -41,4 +40,10 @@ export default class Raffle extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @hasMany(() => Premium)
+  public premiums: HasMany<typeof Premium>
+
+  @hasMany(() => Ticket)
+  public tickets: HasMany<typeof Ticket>
 }
