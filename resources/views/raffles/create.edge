@@ -1,0 +1,29 @@
+@layout('layout/app')
+
+@section('content')
+<h2>Criar Rifa</h2>
+<form action="{{ route('raffles.store') }}" method="POST">
+  <div class="mb-3">
+    <label for="title" class="form-label">Título</label>
+    <input class="form-control" type="text" name="title" id="title">
+  </div>
+
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownType" data-bs-toggle="dropdown" aria-expanded="false">
+        Tipo
+    </button>
+
+    <ul class="dropdown-menu" aria-labelledby="dropdownType">
+        @each(type in {{TypesController.showAll}})
+            <li><a class="dropdown-item" href="#{{type}}">{{type.description}}</a></li>
+        @endeach
+    </ul>
+  </div>
+
+  <div>
+    <button type="submit" class="btn btn-primary">Cadastrar</button>
+    <a href="{{ route('tasks.index') }}" class="btn btn-link">Voltar</a>
+  </div>
+</form>
+
+@endsection
