@@ -7,7 +7,7 @@ export default class AuthController {
   }
 
   public async store({ request, response, auth, session }: HttpContextContract) {
-    const data = request.only(['name', 'email', 'password'])
+    const data = request.only(['name', 'email', 'password', 'admin'])
     try {
       const user = await User.create(data)
       await auth.login(user, true)
