@@ -1,21 +1,56 @@
+import { AuthContract } from '@ioc:Adonis/Addons/Auth'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Raffle from 'App/Models/Raffle'
+import Type from 'App/Models/Type'
+import RaffleValidator from 'App/Validators/RaffleValidator'
 
 export default class RafflesController {
   public async create({ view }: HttpContextContract) {
-    return view.render('raffles/create')
+    const raffle = new Raffle()
+    const types = await Type.all()
+    return view.render('raffles/create', { raffle, types })
   }
+  
+  public async store({ request, response, auth, session }: HttpContextContract) {
+    const data = request.only(['title', 'description', 'probableDrawDate', 'initialSaleDate', 'endSaleDate', 
+    'ticketPrize', 'drawDate', 'typeId'])
+    
+    await request.validate(RaffleValidator)
 
-  public async store({}: HttpContextContract) {}
-
-  public async show({ view }: HttpContextContract) {
+    const user = auth.user
+    await Raffle.create({ ...data, userId: user?.id })
+    session.flash('notice', 'Rifa cadastrada com sucesso.')
+    response.redirect().toRoute('raffle.show')
+  }
+  
+  public async show({ view, auth, params }: HttpContextContract) {
     const raffles = await Raffle.all()
     return view.render('raffles/show', { raffles })
   }
 
+  public async raffleDetails({ view, auth, params }: HttpContextContract) {
+    const raffles = await Raffle.all()
+    return view.render('raffles/raffleDetails', { raffles })
+  }
+
   public async edit({}: HttpContextContract) {}
 
-  public async update({}: HttpContextContract) {}
+  public async update({ params, request, response, auth, session }: HttpContextContract) {
+    const raffle = await this.getRaffles(auth, params.id)
+    const data = request.only(['title','description'])
+
+    await request.validate(RaffleValidator)
+
+    raffle.merge(data)
+    raffle.save()
+    session.flash('notice', 'Rifa atualizada com sucesso.')
+    response.redirect().toRoute('raffle.show')
+  }
 
   public async destroy({}: HttpContextContract) {}
+
+  private async getRaffles(auth: AuthContract, id): Promise<Raffle> {
+    const user = auth.user!!
+    return await user.related('raffles').query().where('id', id).firstOrFail()
+  }
 }

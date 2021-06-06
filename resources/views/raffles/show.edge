@@ -2,29 +2,21 @@
 
 @section('content')
     <h2>Rifas Criadas</h2>
-    
+    <a href="{{ route('raffle.create') }}" class="btn btn-primary">Nova Rifa</a>
     <ul class="list-group mt-3">
         @each(raffle in raffles)
-            <li class="list-group-item d-flex justify-content-between">
+            <li class="list-group-item d-flex justify-content-between mb-3">
                 <div>
                     <label for="title">Título</label>
-                    <p>{{raffle.title}}</p>
+                    <p>{{ raffle.title }}</p>
 
                     <label for="description">Descrição</label>
-                    <p>{{raffle.description}}</p>
+                    <p>{{ raffle.description }}</p>
                 </div>
 
-                <div>
-                    <label for="probableDrawDate">Data provável do sorteio</label>
-                    <p>{{raffle.probableDrawDate}}</p>
-
-                    <label for="initialSaleDate">Data do ínicio da venda</label>
-                    <p>{{raffle.initialSaleDate}}</p>
-
-                    <label for="endSaleDate">Data do fim da venda</label>
-                    <p>{{raffle.endSaleDate}}</p>
+                <div class="actions" style="display: inline">
+                    <a href="{{ route('raffle.details', { id: raffle.id }) }}" class="btn btn-primary">Detalhes</a>
                 </div>
-
             </li>
         @endeach
     </ul>

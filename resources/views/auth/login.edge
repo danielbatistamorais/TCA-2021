@@ -8,6 +8,7 @@
     <div class="col-4">
       <main class="form-signin">
         <form action="{{ route('auth.verify') }}" method="post">
+          {{ csrfField() }}
           <h1 class="h3 mb-3 fw-normal">Login</h1>
 
           <div class="form-floating mb-1">

@@ -6,9 +6,9 @@ export default class TypesController {
 
   public async store({}: HttpContextContract) {}
 
-  public async showAll({}: HttpContextContract) {
-    const tasks = await Type.all()
-    return tasks
+  public async showAll({ view }: HttpContextContract) {
+    const types = await Type.all()
+    return view.render('raffles/create', { types })
   }
 
   public async edit({}: HttpContextContract) {}
