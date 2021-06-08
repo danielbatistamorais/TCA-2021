@@ -18,7 +18,13 @@ export default class RafflesController {
     await request.validate(RaffleValidator)
 
     const user = auth.user
+    
+    // const type = request.param('typeId')
+    
     await Raffle.create({ ...data, userId: user?.id })
+    // await Type.firstOrFail({ type })
+    await Type.query().where('id', data.typeId).firstOrFail()
+
     session.flash('notice', 'Rifa cadastrada com sucesso.')
     response.redirect().toRoute('raffle.show')
   }

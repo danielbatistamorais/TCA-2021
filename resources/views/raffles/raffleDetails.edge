@@ -5,7 +5,7 @@
 
     <ul class="list-group mt-3">
         @each(raffle in raffles)
-            <li class="list-group-item d-flex justify-content-between">
+            <li class="list-group-item d-flex justify-content-between mb-3">
                 <div>
                     <label for="title">Título</label>
                     <p>{{ raffle.title }}</p>
@@ -18,7 +18,7 @@
 
                     <label for="endSaleDate">Data do fim da venda</label>
                     <p>{{ raffle.endSaleDate }}</p>
-                    
+
                     <label for="ticketPrize">Valor</label>
                     <p>{{ raffle.ticketPrize }}</p>
                 </div>
