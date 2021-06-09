@@ -1,0 +1,15 @@
+@layout('layout/app')
+
+@section('content')
+  <h2>Criar Tipo</h2>
+  <form action="{{ route('type.store') }}" method="POST">
+    {{ csrfField() }}
+    @include('type/form')
+  
+    <div class="mb-3">
+      <button type="submit" class="btn btn-primary">Cadastrar</button>
+      <a href="{{ route('raffle.show') }}" class="btn btn-link">Voltar</a>
+    </div>
+  </form>
+
+@endsection

@@ -1,32 +1,33 @@
 <div class="mb-3">
     <label for="title" class="form-label">Título</label>
-    <input class="form-control mb-3" type="text" name="title" id="title" value="{{ flashMessages.get('title', raffle.title) || '' }}">
+    <input class="form-control mb-3" type="text" name="title" id="title" value="{{ flashMessages.get('title') || '' }}">
 
     <label for="description" class="form-label">Descrição</label>
-    <input class="form-control mb-3" type="text" name="description" id="description" value="{{ flashMessages.get('description', raffle.description) || '' }}">
+    <input class="form-control mb-3" type="text" name="description" id="description" value="{{ flashMessages.get('description') || '' }}">
     
     <label for="probableDrawDate" class="form-label">Data provável do sorteio</label>
-    <input class="form-control mb-3" type="datetime-local" name="probableDrawDate" id="probableDrawDate" value="{{ flashMessages.get('probableDrawDate', raffle.probableDrawDate) || '' }}">
+    <input class="form-control mb-3" type="datetime-local" name="probableDrawDate" id="probableDrawDate" value="{{ flashMessages.get('probableDrawDate') || '' }}">
 
     <div class="row">
         <div class="col-6">
             <label for="initialSaleDate" class="form-label">Data inicial da venda</label>
-            <input class="form-control mb-3" type="datetime-local" name="initialSaleDate" id="initialSaleDate" value="{{ flashMessages.get('initialSaleDate', raffle.initialSaleDate) || '' }}">
+            <input class="form-control mb-3" type="datetime-local" name="initialSaleDate" id="initialSaleDate" value="{{ flashMessages.get('initialSaleDate') || '' }}">
         </div>
         <div class="col-6">
             <label for="endSaleDate" class="form-label">Data final da venda</label>
-            <input class="form-control mb-3" type="datetime-local" name="endSaleDate" id="endSaleDate" value="{{ flashMessages.get('endSaleDate', raffle.endSaleDate) || '' }}">
+            <input class="form-control mb-3" type="datetime-local" name="endSaleDate" id="endSaleDate" value="{{ flashMessages.get('endSaleDate') || '' }}">
         </div>                
     </div>        
     
     <label for="ticketPrize" class="form-label">Valor do bilhete</label>
-    <input class="form-control mb-3" type="number" name="ticketPrize" id="ticketPrize" value="{{ flashMessages.get('ticketPrize', raffle.ticketPrize) || '' }}">
+    <input class="form-control mb-3" type="number" name="ticketPrize" id="ticketPrize" value="{{ flashMessages.get('ticketPrize') || '' }}">
     
-    <select class="form-select">
+    <select class="form-select" name="typeId" id="typeId" required>
     <option disabled selected>Selecione um tipo...</option>
     @each(type in types)
-        <option class="form-control mb-3" type="number" name="typeId" id="typeId" value="{{ type.id }}" @if(flashMessages.get('typeId') == type.id) selected @endif>
-            {{ type.description }}</option>
+        <option class="form-control mb-3" value="{{ type.id }}">
+            {{ type.description }}
+        </option>
     @endeach
     </select>
 

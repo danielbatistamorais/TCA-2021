@@ -1,0 +1,23 @@
+<div class="mb-3">
+    <label for="description" class="form-label">Descrição</label>
+    <input class="form-control mb-3" type="text" name="description" id="description" value="{{ flashMessages.get('description') || '' }}">
+    
+    <label for="initialNumber" class="form-label">Número inicial</label>
+    <input class="form-control mb-3" type="number" name="initialNumber" id="initialNumber" value="{{ flashMessages.get('initialNumber') || '' }}">
+
+    <div class="row">
+        <div class="col-6">
+            <label for="step" class="form-label">Passo</label>
+            <input class="form-control mb-3" type="number" name="step" id="step" value="{{ flashMessages.get('step') || '' }}">
+        </div>
+        <div class="col-6">
+            <label for="numberOfTickets" class="form-label">Número de bilhetes</label>
+            <input class="form-control mb-3" type="number" name="numberOfTickets" id="numberOfTickets" value="{{ flashMessages.get('numberOfTickets') || '' }}">
+        </div>       
+    </div>
+
+    @if(flashMessages.has('errors.title'))
+        <small class="text-danger">{{ flashMessages.get('errors.title') }}</small>
+    @endif
+</div>
+  

@@ -7,20 +7,20 @@
         @each(raffle in raffles)
             <li class="list-group-item d-flex justify-content-between mb-3">
                 <div>
-                    <label for="title">Título</label>
+                    <label for="title"><b>Título</b></label>
                     <p>{{ raffle.title }}</p>
 
-                    <label for="probableDrawDate">Data provável do sorteio</label>
+                    <label for="probableDrawDate"><b>Data provável do sorteio</b></label>
                     <p>{{ raffle.probableDrawDate }}</p>
 
-                    <label for="initialSaleDate">Data do ínicio da venda</label>
+                    <label for="initialSaleDate"><b>Data do ínicio da venda</b></label>
                     <p>{{ raffle.initialSaleDate }}</p>
 
-                    <label for="endSaleDate">Data do fim da venda</label>
+                    <label for="endSaleDate"><b>Data do fim da venda</b></label>
                     <p>{{ raffle.endSaleDate }}</p>
 
-                    <label for="ticketPrize">Valor</label>
-                    <p>{{ raffle.ticketPrize }}</p>
+                    <label for="ticketPrize"><b>Valor do bilhete</b></label>
+                    <p>R$ {{ raffle.ticketPrize }}</p>
                 </div>
             </li>
         @endeach

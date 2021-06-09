@@ -1,15 +1,34 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Type from 'App/Models/Type'
+import TypeValidator from 'App/Validators/TypeValidator'
 
 export default class TypesController {
-  public async create({}: HttpContextContract) {}
+  public async create({ view, auth, response}: HttpContextContract) {
+    const type = new Type();
 
-  public async store({}: HttpContextContract) {}
-
-  public async showAll({ view }: HttpContextContract) {
-    const types = await Type.all()
-    return view.render('raffles/create', { types })
+    if (!auth.user?.admin) {
+      response.redirect().toRoute('root')
+    }
+    return view.render('type/create', { type })
   }
+
+  public async store({ request, session, response}: HttpContextContract) {
+    const data = await request.only([
+      'description',
+      'initialNumber',
+      'step',
+      'numberOfTickets',
+    ])
+
+    await request.validate(TypeValidator)
+
+    const type = await Type.create(data)
+
+    session.flash('notice', 'Tipo cadastrado com sucesso.')
+    response.redirect().toRoute('raffle.show', { type })
+  }
+
+  public async showAll({}: HttpContextContract) {}
 
   public async edit({}: HttpContextContract) {}
 
