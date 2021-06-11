@@ -3,6 +3,7 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Raffle from 'App/Models/Raffle'
 import Type from 'App/Models/Type'
 import RaffleValidator from 'App/Validators/RaffleValidator'
+import Ticket from 'App/Models/Ticket'
 
 export default class RafflesController {
   public async create({ view }: HttpContextContract) {
@@ -26,7 +27,15 @@ export default class RafflesController {
     await request.validate(RaffleValidator)
 
     const raffle = await auth.user!!.related('raffles').create(data)
-    
+    const type = await Type.query().where('id', data.typeId).firstOrFail()
+    const tickets: { number: Number }[] = []
+
+    for (let i = 0, j = type.initialNumber; i < type.numberOfTickets; i++, j += type.step) {
+      tickets.push({ number: j })
+    }
+
+    await raffle?.related('tickets').createMany(tickets)
+
     session.flash('notice', 'Rifa cadastrada com sucesso.')
     response.redirect().toRoute('raffle.show', { raffleId: raffle.id })
   }
@@ -41,15 +50,12 @@ export default class RafflesController {
     return view.render('raffles/raffleDetails', { raffles })
   }
 
-  public async edit({}: HttpContextContract) {}
-
   public async update({ params, request, response, auth, session }: HttpContextContract) {
     await request.validate(RaffleValidator)
-    
+
     session.flash('notice', 'Rifa atualizada com sucesso.')
     response.redirect().toRoute('raffle.show')
   }
 
   public async destroy({}: HttpContextContract) {}
-
 }

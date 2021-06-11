@@ -3,8 +3,8 @@ import Type from 'App/Models/Type'
 import TypeValidator from 'App/Validators/TypeValidator'
 
 export default class TypesController {
-  public async create({ view, auth, response}: HttpContextContract) {
-    const type = new Type();
+  public async create({ view, auth, response }: HttpContextContract) {
+    const type = new Type()
 
     if (!auth.user?.admin) {
       response.redirect().toRoute('root')
@@ -12,13 +12,8 @@ export default class TypesController {
     return view.render('type/create', { type })
   }
 
-  public async store({ request, session, response}: HttpContextContract) {
-    const data = await request.only([
-      'description',
-      'initialNumber',
-      'step',
-      'numberOfTickets',
-    ])
+  public async store({ request, session, response }: HttpContextContract) {
+    const data = await request.only(['description', 'initialNumber', 'step', 'numberOfTickets'])
 
     await request.validate(TypeValidator)
 
