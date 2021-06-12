@@ -23,7 +23,7 @@ export default class TypesController {
     response.redirect().toRoute('raffle.show', { type })
   }
 
-  public async showAll({}: HttpContextContract) {}
+  public async show({}: HttpContextContract) {}
 
   public async edit({}: HttpContextContract) {}
 

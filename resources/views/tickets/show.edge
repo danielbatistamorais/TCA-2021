@@ -1,0 +1,21 @@
+@layout('layout/app')
+
+@section('content')
+    <h2>Bilhetes</h2>
+    <ul class="list-group mt-3">
+        @each(ticket in tickets)
+            <li class="list-group-item d-flex justify-content-between mb-3">
+                <div>
+                    <label for="number"><b>Bilhete Nº</b></label>
+                    <p>{{ ticket.number }}</p>
+
+                </div>
+
+            </li>
+        
+        @endeach
+        <div class="mb-3">
+            <a href="{{ route('raffle.show') }}" class="btn btn-link">Voltar</a>
+        </div>    
+    </ul>
+@endsection

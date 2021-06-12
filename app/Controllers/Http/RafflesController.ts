@@ -45,9 +45,9 @@ export default class RafflesController {
     return view.render('raffles/show', { raffles })
   }
 
-  public async raffleDetails({ view, auth }: HttpContextContract) {
-    const raffles = await auth.user!!.related('raffles').query()
-    return view.render('raffles/raffleDetails', { raffles })
+  public async raffleDetails({ view, auth, request, params }: HttpContextContract) {
+    const raffle = await Raffle.query().where('id', params.id).firstOrFail()
+    return view.render('raffles/raffleDetails', { raffle })
   }
 
   public async update({ params, request, response, auth, session }: HttpContextContract) {
