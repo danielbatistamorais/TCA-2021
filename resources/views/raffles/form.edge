@@ -19,20 +19,33 @@
         </div>                
     </div>        
     
-    <label for="ticketPrize" class="form-label">Valor do bilhete</label>
-    <input class="form-control mb-3" type="number" name="ticketPrize" id="ticketPrize" value="{{ flashMessages.get('ticketPrize') || '' }}">
-    
-    <select class="form-select" name="typeId" id="typeId" required>
-    <option disabled selected>Selecione um tipo...</option>
-    @each(type in types)
-        <option class="form-control mb-3" value="{{ type.id }}">
-            {{ type.description }}
-        </option>
-    @endeach
-    </select>
+    <div class="row">
+        <div class="col-6">
+            <label for="ticketPrize" class="form-label">Valor do bilhete</label>
+            <input class="form-control mb-3" type="number" name="ticketPrize" id="ticketPrize" value="{{ flashMessages.get('ticketPrize') || '' }}">
+        </div>    
+        <div class="col-6">
+            <label for="type" class="form-label">Tipo</label>
+            <select class="form-select" name="typeId" id="typeId" required>
+            <option disabled selected>Selecione um tipo...</option>
+            @each(type in types)
+                <option class="form-control mb-3" value="{{ type.id }}" 
+                title="Número de bilhetes: {{ type.numberOfTickets }}
+Número Inicial dos Bilhetes: {{ type.initialNumber }}
+Número de Passos: {{ type.step }}">
+                    {{ type.description }}
+                </option>
+            @endeach
+            </select>
+        </div>
+    </div>
 
     @if(flashMessages.has('errors.title'))
         <small class="text-danger">{{ flashMessages.get('errors.title') }}</small>
+    @endif
+
+     @if(flashMessages.has('errors.description'))
+        <small class="text-danger">{{ flashMessages.get('errors.description') }}</small>
     @endif
 </div>
   

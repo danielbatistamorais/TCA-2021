@@ -1,8 +1,61 @@
 @layout('layout/app')
 
 @section('content')
-  <h1>BEM VINDO AO MEGA SORTEADOR</h1>
-  <h2>Essa aplicação é sobre um sorteador de rifas online!</h2>
-  <h3>↓Acesse o link abaixo para mais informações↓</h3>
-    <a href="{{ route('about') }}" class="btn btn-primary">Mais Informações</a>
+    @if(auth.isLoggedIn)
+        <h2>Rifas Disponíveis</h2>
+      <div class="row d-flex justify-content-between">
+        @each(raffle in raffles)
+          <div class="col-4">
+            <div class="card border-primary mt-3 mb-3" style="width: 20rem;">
+              <div class="card-body">
+                <h5 class="card-title" for="title"><b>{{ raffle.title }}</b></h5>
+                
+                @each(user in users)
+                  @if(user.id == raffle.userId)
+                  <p class="card-subtitle text-muted">Criado por: {{ user.name }}</p>
+                  @endif
+                @endeach                    
+
+                <p class="card-text">Preço R$: {{ raffle.ticketPrize }}</p>
+                
+                <div class="actions" style="display: inline">
+                    <a href="{{ route('raffle.details', { id: raffle.id }) }}" class="btn btn-primary">Detalhes</a>
+                    <a href="{{ route('ticket.show', { id: raffle.id }) }}" class="btn btn-primary">Comprar</a>
+                </div>
+              </div>
+            </div>
+          </div>  
+        @endeach
+      </div>
+
+      <h2>Rifas Que Estou Participando (N está feita ainda)</h2>
+      <div class="row d-flex justify-content-between">
+        @each(raffle in raffles)
+            <div class="col-4">
+                <div class="card border-primary mt-3 mb-3" style="width: 20rem;">
+                    <div class="card-body">
+                        <h5 class="card-title" for="title"><b>{{ raffle.title }}</b></h5>
+
+                        @each(user in users)
+                            @if(user.id == raffle.userId)
+                                <p class="card-subtitle text-muted">Comprado por: {{ user.name }}</p>
+                            @endif
+                        @endeach      
+                        <p class="card-text">Preço R$: {{ raffle.ticketPrize }}</p>
+                        
+                        <div class="actions" style="display: inline">
+                            <a href="{{ route('raffle.details', { id: raffle.id }) }}" class="btn btn-primary">Detalhes</a>
+                            <a href="{{ route('ticket.show', { id: raffle.id }) }}" class="btn btn-primary">Comprar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endeach
+      </div>
+    @else
+        <h1>BEM VINDO AO MEGA SORTEADOR</h1>
+        <h2>Essa aplicação é sobre um sorteador de rifas online!</h2>
+        <h3>↓Acesse o link abaixo para mais informações↓</h3>
+        <a href="{{ route('about') }}" class="btn btn-primary">Mais Informações</a>
+    @endif
 @endsection

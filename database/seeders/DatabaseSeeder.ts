@@ -23,7 +23,7 @@ export default class DataBaseSeederSeeder extends BaseSeeder {
       name: 'Luiz',
       email: 'luiz@email.com',
       password: 'lasanha1',
-      admin: false,
+      admin: true,
     })
 
     const type1 = await Type.create({
@@ -42,7 +42,7 @@ export default class DataBaseSeederSeeder extends BaseSeeder {
 
     const raffle1 = await user1.related('raffles').create({
       typeId: 2,
-      title: 'Rifa para castração do Jaiminho',
+      title: 'Castração do Jaiminho',
       description:
         'Sorteio de uma cesta de chocolates. O dinheiro arrecadado será utilizado para castrar o cachorro Jaiminho',
       probableDrawDate: DateTime.now(),

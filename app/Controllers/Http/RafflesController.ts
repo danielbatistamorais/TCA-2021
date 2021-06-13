@@ -28,7 +28,8 @@ export default class RafflesController {
 
     const raffle = await auth.user!!.related('raffles').create(data)
     const type = await Type.query().where('id', data.typeId).firstOrFail()
-    const tickets: { number: Number }[] = []
+    // eslint-disable-next-line no-array-constructor
+    const tickets = Array()
 
     for (let i = 0, j = type.initialNumber; i < type.numberOfTickets; i++, j += type.step) {
       tickets.push({ number: j })
@@ -45,7 +46,7 @@ export default class RafflesController {
     return view.render('raffles/show', { raffles })
   }
 
-  public async raffleDetails({ view, auth, request, params }: HttpContextContract) {
+  public async raffleDetails({ view, params }: HttpContextContract) {
     const raffle = await Raffle.query().where('id', params.id).firstOrFail()
     return view.render('raffles/raffleDetails', { raffle })
   }

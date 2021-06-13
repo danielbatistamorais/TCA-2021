@@ -1,21 +1,47 @@
 @layout('layout/app')
 
 @section('content')
-    <h2>Bilhetes</h2>
-    <ul class="list-group mt-3">
-        @each(ticket in tickets)
-            <li class="list-group-item d-flex justify-content-between mb-3">
-                <div>
-                    <label for="number"><b>Bilhete Nº</b></label>
-                    <p>{{ ticket.number }}</p>
+    <h2>Bilhetes</h2>    
+    <div class="row d-flex justify-content-between">
+    @each(ticket in tickets)
+        @if(!ticket.userId)
+            <div class="col-4">
+                <div class="card text-white bg-dark mt-3 mb-3" style="width: 20rem;">
+                    <div class="card-body">     
+                        <h5 class="card-title" for="number"><b>Bilhete Nº {{ ticket.number }}</b></h5>                        
+                        <p class="card-text"> Preço R$ {{ raffle.ticketPrize }}</p>
 
+                        <div>
+                            <form method="POST" action="{{ route('ticket.buy', {id: ticket.raffleId, ticketId: ticket.id}) }}">
+                                {{ csrfField() }}
+                                <button type="submit" class="btn btn-success">Comprar</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
+            </div>    
+        @else
+        <div class="col-4">
+            <div class="card text-dark bg-light border-dark mt-3 mb-3" style="width: 20rem;">                
+                <div class="card-body">
+                    <h5 class="card-title" for="number"><b>Bilhete Nº {{ ticket.number }}</b></h5>                        
+                    
+                    @each(user in users)
+                        @if(user.id == ticket.userId)
+                        <p class="card-text">Comprado por: {{ user.name }}</p>
+                        @endif
+                    @endeach
 
-            </li>
-        
-        @endeach
+                    <div>
+                        <button disabled class="btn btn-secondary">Comprado</button>
+                    </div>        
+                </div>
+            </div>    
+        </div>
+        @endif    
+    @endeach
         <div class="mb-3">
             <a href="{{ route('raffle.show') }}" class="btn btn-link">Voltar</a>
         </div>    
-    </ul>
+    </div>
 @endsection

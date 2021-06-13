@@ -1,13 +1,13 @@
 @layout('layout/app')
 
 @section('content')
-    <h2>Rifas Criadas</h2>
+    <h2>Detalhes da Rifa: {{ raffle.title }}</h2>
 
     <ul class="list-group mt-3">
         <li class="list-group-item d-flex justify-content-between mb-3">
             <div>
-                <label for="title"><b>Título</b></label>
-                <p>{{ raffle.title }}</p>
+                <label for="description"><b>Descrição</b></label>
+                <p>{{ raffle.description }}</p>
 
                 <label for="probableDrawDate"><b>Data provável do sorteio</b></label>
                 <p>{{ raffle.probableDrawDate }}</p>
