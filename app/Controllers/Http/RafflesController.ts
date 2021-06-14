@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { AuthContract } from '@ioc:Adonis/Addons/Auth'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Raffle from 'App/Models/Raffle'
@@ -24,21 +25,28 @@ export default class RafflesController {
       'typeId',
     ])
 
-    await request.validate(RaffleValidator)
+    if (data.initialSaleDate > data.endSaleDate) {
+      session.flash('error', 'Data inicial de venda deve ser antes que data final.')
+      response.redirect().back()
+    }
+    else {
+      await request.validate(RaffleValidator)
+      const raffle = await auth.user!!.related('raffles').create(data)
+      const type = await Type.query().where('id', data.typeId).firstOrFail()
+      // eslint-disable-next-line no-array-constructor
+      const tickets = Array()
 
-    const raffle = await auth.user!!.related('raffles').create(data)
-    const type = await Type.query().where('id', data.typeId).firstOrFail()
-    // eslint-disable-next-line no-array-constructor
-    const tickets = Array()
+      for (let i = 0, j = type.initialNumber; i < type.numberOfTickets; i++, j += type.step) {
+        tickets.push({ number: j })
+      }
 
-    for (let i = 0, j = type.initialNumber; i < type.numberOfTickets; i++, j += type.step) {
-      tickets.push({ number: j })
+      await raffle?.related('tickets').createMany(tickets)
+
+      session.flash('notice', 'Rifa cadastrada com sucesso.')
+      response.redirect().toRoute('raffle.show', { raffleId: raffle.id })
     }
 
-    await raffle?.related('tickets').createMany(tickets)
-
-    session.flash('notice', 'Rifa cadastrada com sucesso.')
-    response.redirect().toRoute('raffle.show', { raffleId: raffle.id })
+    
   }
 
   public async show({ view, auth }: HttpContextContract) {

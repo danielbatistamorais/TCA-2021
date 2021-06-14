@@ -1,10 +1,20 @@
-<div class="mb-3">
-    <label for="title" class="form-label">Título</label>
-    <input class="form-control mb-3" type="text" name="title" id="title" value="{{ flashMessages.get('title') || '' }}">
+<div class="mt-3 mb-3">
+    <div class="mb-3">
+        <label for="title" class="form-label">Título</label>
+        <input class="form-control" type="text" name="title" id="title" value="{{ flashMessages.get('title') || '' }}">
+        @if(flashMessages.has('errors.title'))
+            <small class="text-danger">{{ flashMessages.get('errors.title') }}</small>
+        @endif
+    </div>
 
-    <label for="description" class="form-label">Descrição</label>
-    <input class="form-control mb-3" type="text" name="description" id="description" value="{{ flashMessages.get('description') || '' }}">
-    
+    <div class="mb-3">
+        <label for="description" class="form-label">Descrição</label>
+        <input class="form-control" type="text" name="description" id="description" value="{{ flashMessages.get('description') || '' }}">
+        @if(flashMessages.has('errors.description'))
+            <small class="text-danger">{{ flashMessages.get('errors.description') }}</small>
+        @endif
+    </div>
+
     <label for="probableDrawDate" class="form-label">Data provável do sorteio</label>
     <input class="form-control mb-3" type="datetime-local" name="probableDrawDate" id="probableDrawDate" value="{{ flashMessages.get('probableDrawDate') || '' }}">
 
@@ -39,13 +49,5 @@ Número de Passos: {{ type.step }}">
             </select>
         </div>
     </div>
-
-    @if(flashMessages.has('errors.title'))
-        <small class="text-danger">{{ flashMessages.get('errors.title') }}</small>
-    @endif
-
-     @if(flashMessages.has('errors.description'))
-        <small class="text-danger">{{ flashMessages.get('errors.description') }}</small>
-    @endif
 </div>
   
