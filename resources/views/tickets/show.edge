@@ -2,7 +2,7 @@
 
 @section('content')
     <h2>Bilhetes</h2>    
-    <div class="row d-flex justify-content-between">
+    <div class="row d-flex justify-content-start">
     @each(ticket in tickets)
         @if(!ticket.userId)
             <div class="col-4">

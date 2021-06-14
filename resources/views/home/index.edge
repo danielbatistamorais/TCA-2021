@@ -3,7 +3,7 @@
 @section('content')
     @if(auth.isLoggedIn)
     <h2>Rifas Disponíveis</h2>
-    <div class="row d-flex justify-content-between">
+    <div class="row d-flex justify-content-start">
       @each(raffle in raffles)
         <div class="col-4">
           <div class="card border-primary mt-3 mb-3" style="width: 20rem;">
