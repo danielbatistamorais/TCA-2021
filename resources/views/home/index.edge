@@ -27,18 +27,19 @@
         </div>  
       @endeach
       
-      <h2>Rifas Que Estou Participando (N está feita ainda)</h2>
-      @each(raffle in raffles)
+      <h2>Rifas Que Estou Participando</h2>
+      @each(raffle in rafflesPartic)
           <div class="col-4">
               <div class="card border-primary mt-3 mb-3" style="width: 20rem;">
                   <div class="card-body">
                       <h5 class="card-title" for="title"><b>{{ raffle.title }}</b></h5>
 
                       @each(user in users)
-                          @if(user.id == raffle.userId)
-                              <p class="card-subtitle text-muted">Comprado por: {{ user.name }}</p>
-                          @endif
-                      @endeach      
+                        @if(user.id == raffle.userId)
+                        <p class="card-subtitle text-muted">Criado por: {{ user.name }}</p>
+                        @endif
+                      @endeach 
+
                       <p class="card-text">Preço R$: {{ raffle.ticketPrize }}</p>
                       
                       <div class="actions" style="display: inline">
