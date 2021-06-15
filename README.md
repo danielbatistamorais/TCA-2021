@@ -6,4 +6,7 @@ Este repositório contém o projeto do TCA correspondente ao ano de 2020/2021 (A
 ## INTEGRANTES DA EQUIPE
 1. Daniel Batista Morais
 2. Filipe Pereira Freitas
-3. Luiz Gustavo Nunes
+3. Luiz Gustav o Nunes
+
+## LINK DA APRESENTAÇÃO 
+https://youtu.be/9ndlZfA4OuY 
