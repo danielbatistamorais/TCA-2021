@@ -1,6 +1,8 @@
+/* eslint-disable prettier/prettier */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Raffle from 'App/Models/Raffle'
 import Ticket from 'App/Models/Ticket'
+import Type from 'App/Models/Type'
 import User from 'App/Models/User'
 
 export default class TicketsController {
@@ -13,12 +15,24 @@ export default class TicketsController {
         const tickets = await raffle.related('tickets').query()
         const users = await User.query()
 
-        return view.render('tickets/show', { tickets, users, raffle })
+        let page = request.qs().page
+
+        const bilhetes = await this.loadNextPage(raffle, request, page)
+        const bilhetesTamanho =  await Type.query()
+        .where('types.id', raffle!!.typeId).firstOrFail()
+
+        const max = Math.ceil(bilhetesTamanho.numberOfTickets / 100)
+
+        return view.render('tickets/show', { tickets, users, raffle, bilhetes, page,max })
     }
 
     public async buy({ params, response, auth }: HttpContextContract) {
         await Ticket.query().where('id', params.ticketId).update({ user_id: auth.user?.id })
         return response.redirect().toRoute('ticket.show', { id: params.id })
+    }
+    
+    private async loadNextPage(raffle, request, page){
+        return await raffle.related('tickets').query().forPage(request.input('page', page), 100)
     }
 
     public async edit({}: HttpContextContract) {}

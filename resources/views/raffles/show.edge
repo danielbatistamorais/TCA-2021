@@ -3,6 +3,7 @@
 @section('content')
     <h2>Rifas Criadas</h2>
     <a href="{{ route('raffle.create') }}" class="btn btn-primary">Nova Rifa</a>
+    <a href="{{ route('root') }}" class="btn btn-link">Voltar</a>
     <ul class="list-group mt-3">
         @each(raffle in raffles)
             <li class="list-group-item d-flex justify-content-between mb-3">
@@ -21,5 +22,6 @@
                 
             </li>
         @endeach
+        
     </ul>
 @endsection

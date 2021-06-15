@@ -46,7 +46,6 @@ export default class RafflesController {
       response.redirect().toRoute('raffle.show', { raffleId: raffle.id })
     }
 
-    
   }
 
   public async show({ view, auth }: HttpContextContract) {
@@ -68,3 +67,4 @@ export default class RafflesController {
 
   public async destroy({}: HttpContextContract) {}
 }
+// 
