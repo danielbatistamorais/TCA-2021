@@ -23,7 +23,7 @@ export default class TicketsController {
 
         const max = Math.ceil(bilhetesTamanho.numberOfTickets / 100)
 
-        return view.render('tickets/show', { tickets, users, raffle, bilhetes, page,max })
+        return view.render('tickets/show', { tickets, users, raffle, bilhetes, page, max })
     }
 
     public async buy({ params, response, auth }: HttpContextContract) {

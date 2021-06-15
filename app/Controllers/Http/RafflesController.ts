@@ -1,3 +1,4 @@
+/* eslint-disable no-array-constructor */
 /* eslint-disable prettier/prettier */
 import { AuthContract } from '@ioc:Adonis/Addons/Auth'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
@@ -23,15 +24,31 @@ export default class RafflesController {
       'ticketPrize',
       'drawDate',
       'typeId',
+      'premiums',
+      'placing',
     ])
 
     if (data.initialSaleDate > data.endSaleDate) {
       session.flash('error', 'Data inicial de venda deve ser antes que data final.')
       response.redirect().back()
     }
+    else if (data.ticketPrize <= 0) {
+      session.flash('error', 'Valor do bilhete deve ser maior que 0.')
+      response.redirect().back()
+    }
     else {
       await request.validate(RaffleValidator)
+      
+      const premiums = new Array()
+      const premium = { description: data.premiums, placing: data.placing}
+      
+      if (premium.description && premium.placing) {
+        premiums.push(premium)  
+      }
+
       const raffle = await auth.user!!.related('raffles').create(data)
+      await raffle?.related('premiums').createMany(premiums)
+
       const type = await Type.query().where('id', data.typeId).firstOrFail()
       // eslint-disable-next-line no-array-constructor
       const tickets = Array()

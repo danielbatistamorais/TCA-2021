@@ -65,6 +65,9 @@ export default class Raffle extends BaseModel {
   public typeHasOne: HasOne<typeof Type>
 
   @hasMany(() => Premium)
+  public placing: HasMany<typeof Premium>
+
+  @hasMany(() => Premium)
   public premiums: HasMany<typeof Premium>
 
   @hasMany(() => Ticket)

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { schema, rules } from '@ioc:Adonis/Core/Validator'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 

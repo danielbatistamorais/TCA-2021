@@ -3,3 +3,7 @@
 .page-body {
   margin-top: 20px;
 }
+
+.paginacao .paginacao-item:nth-child(n+101){
+  display: none;
+}

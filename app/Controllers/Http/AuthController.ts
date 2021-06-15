@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
 
@@ -8,9 +9,18 @@ export default class AuthController {
 
   public async store({ request, response, auth, session }: HttpContextContract) {
     const data = request.only(['name', 'email', 'password', 'admin'])
-    try {
+    
+    const users = await User.query()
+    for (const user of users) {
+      if (user.email === data.email) {
+        session.flash('errors', 'Email já utilizado.')
+        return response.redirect().back()
+      }  
+    }
+
+    try {  
       const user = await User.create(data)
-      await auth.login(user, true)
+      await auth.login(user, true)      
     } catch (error) {
       session.flash('errors', 'Erro no registro. Verifique suas informações.')
       return response.redirect().toRoute('auth.register')
