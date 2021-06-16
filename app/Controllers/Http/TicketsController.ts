@@ -12,23 +12,30 @@ export default class TicketsController {
 
     public async show({ auth, params, view, request }: HttpContextContract) {
         const raffle = await Raffle.query().where('id', params.id).firstOrFail()
-        const tickets = await raffle.related('tickets').query()
+        // const tickets = await raffle.related('tickets').query()
         const users = await User.query()
+        let pag = request.input('pag', 1)
+        const limit = 100
 
-        let page = request.qs().page
+        const max = (await raffle.related('tickets').query()).length / limit
 
-        const bilhetes = await this.loadNextPage(raffle, request, page)
-        const bilhetesTamanho =  await Type.query()
-        .where('types.id', raffle!!.typeId).firstOrFail()
+        const tickets = await raffle.related('tickets').query().paginate(pag, limit)
+        pag = parseInt(pag)
 
-        const max = Math.ceil(bilhetesTamanho.numberOfTickets / 100)
+        // let page = request.qs().page
 
-        return view.render('tickets/show', { tickets, users, raffle, bilhetes, page, max })
+        // const bilhetes = await this.loadNextPage(raffle, request, page)
+        // const bilhetesTamanho =  await Type.query()
+        // .where('id', raffle!!.typeId).firstOrFail()
+
+        // const max = Math.ceil(bilhetesTamanho.numberOfTickets / 100)
+
+        return view.render('tickets/show', { tickets, users, raffle, pag, max })
     }
 
     public async buy({ params, response, auth }: HttpContextContract) {
         await Ticket.query().where('id', params.ticketId).update({ user_id: auth.user?.id })
-        return response.redirect().toRoute('ticket.show', { id: params.id })
+        return response.redirect().toRoute('ticket.show', { id: params.id, qs: { pag:1 } })
     }
     
     private async loadNextPage(raffle, request, page){

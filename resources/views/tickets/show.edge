@@ -2,6 +2,25 @@
 
 @section('content')
     <h2>Bilhetes</h2>    
+
+    <nav>
+        <ul class="row pagination mt-3">
+            <li class="col-6 page-item
+            @if(pag == 1)
+                disabled
+            @endif
+            " style="width: 8rem;">
+            <a class="text-center page-link" href="?pag={{pag-1}}"><i class="bi bi-arrow-left-square-fill"></i></a></li>
+            
+            <li class="col-6  page-item
+            @if(pag == max)
+                disabled
+            @endif
+            " style="width: 8rem;">
+            <a class="text-center page-link" href="?pag={{pag+1}}"><i class="bi bi-arrow-right-square-fill"></i></a></li>
+        </ul>
+    </nav>
+
     <div class="row d-flex justify-content-between">
     @each(ticket in tickets)
         @if(!ticket.userId)
@@ -42,6 +61,6 @@
     @endeach
         <div class="mb-3">
             <a href="{{ route('raffle.show') }}" class="btn btn-link">Voltar</a>
-        </div>    
+        </div>
     </div>
 @endsection

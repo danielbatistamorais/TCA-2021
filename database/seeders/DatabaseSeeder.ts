@@ -16,13 +16,13 @@ export default class DataBaseSeederSeeder extends BaseSeeder {
       name: 'Filipe',
       email: 'filipe@email.com',
       password: 'salsicha321',
-      admin: false,
+      admin: true,
     })
 
     const user3 = await User.create({
       name: 'Luiz',
       email: 'luiz@email.com',
-      password: 'lasanha1',
+      password: '1l2u3i4z',
       admin: true,
     })
 
