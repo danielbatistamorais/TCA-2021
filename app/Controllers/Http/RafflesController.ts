@@ -84,4 +84,3 @@ export default class RafflesController {
 
   public async destroy({}: HttpContextContract) {}
 }
-// 

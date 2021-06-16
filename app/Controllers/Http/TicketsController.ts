@@ -22,14 +22,6 @@ export default class TicketsController {
         const tickets = await raffle.related('tickets').query().paginate(pag, limit)
         pag = parseInt(pag)
 
-        // let page = request.qs().page
-
-        // const bilhetes = await this.loadNextPage(raffle, request, page)
-        // const bilhetesTamanho =  await Type.query()
-        // .where('id', raffle!!.typeId).firstOrFail()
-
-        // const max = Math.ceil(bilhetesTamanho.numberOfTickets / 100)
-
         return view.render('tickets/show', { tickets, users, raffle, pag, max })
     }
 
@@ -38,10 +30,6 @@ export default class TicketsController {
         return response.redirect().toRoute('ticket.show', { id: params.id, qs: { pag:1 } })
     }
     
-    private async loadNextPage(raffle, request, page){
-        return await raffle.related('tickets').query().forPage(request.input('page', page), 100)
-    }
-
     public async edit({}: HttpContextContract) {}
 
     public async update({}: HttpContextContract) {}
